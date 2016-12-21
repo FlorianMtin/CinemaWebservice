@@ -118,11 +118,10 @@ import persistance.DialogueBd;
                             rs.get(i +1).toString(),
                             Integer.parseInt(rs.get(i+2).toString()),
                             rs.get(i+3).toString(),
-                            Integer.parseInt(rs.get(i+4).toString()),
-                            Integer.parseInt(rs.get(i+5).toString()),
+                            Long.parseLong(rs.get(i+4).toString()),
+                            Long.parseLong(rs.get(i+5).toString()),
                             Integer.parseInt(rs.get(i+6).toString()),
-                            rs.get(i+7).toString()
-                            );
+                            rs.get(i+7).toString());
                     mesFilms.add(f);
                     i = i + 8;
 
@@ -137,6 +136,54 @@ import persistance.DialogueBd;
                 throw e;
             }
         }
+
+        @GET
+        @Path("/Films/{Id}")
+        @Produces("application/json")
+        public String rechercherOeuvreId(@PathParam("Id") String idFilm) throws MonException, Exception
+        {
+            String mysql="";
+            String json = "";
+            Film unFilm;
+            try{
+                mysql ="SELECT * FROM Film Where NoFilm = " + idFilm + ";";
+                unFilm = rechercheFilm(mysql);
+                Gson gson = new Gson();
+                json = gson.toJson(unFilm);
+            }
+            catch (MonException e) {
+                System.out.println(e.getMessage());
+                throw e;
+            }
+            return json;
+        }
+
+        public Film rechercheFilm(String mysql) throws MonException {
+
+
+            List<Object> rs;
+            DialogueBd dialogueBd = DialogueBd.getInstance();
+            rs = dialogueBd.lecture(mysql);
+            int i = 0;
+            Film film = null;
+            if(rs.size()>0){
+                 film = new Film(Integer.parseInt(rs.get(i).toString()),
+                        rs.get(i +1).toString(),
+                        Integer.parseInt(rs.get(i+2).toString()),
+                        rs.get(i+3).toString(),
+                        Long.parseLong(rs.get(i+4).toString()),
+                        Long.parseLong(rs.get(i+5).toString()),
+                        Integer.parseInt(rs.get(i+6).toString()),
+                        rs.get(i+7).toString());
+
+
+
+            }
+
+            return film;
+
+        }
+
 
         // PERSONNAGE //
 

@@ -12,12 +12,12 @@ public class Film implements Serializable {
     private String Titre;
     private int Duree;
     private String DateSortie;
-    private int Budget;
-    private int MontantRecette;
+    private long Budget;
+    private long MontantRecette;
     private int NoRea;
     private String CodeCat;
 
-    public Film(int noFilm, String titre, int duree, String dateSortie, int budget, int montantRecette, int noRea, String codeCat) {
+    public Film(int noFilm, String titre, int duree, String dateSortie, long budget, long montantRecette, int noRea, String codeCat) {
         NoFilm = noFilm;
         Titre = titre;
         Duree = duree;
@@ -28,9 +28,7 @@ public class Film implements Serializable {
         CodeCat = codeCat;
     }
 
-    public Film() {
 
-    }
 
     public int getNoFilm() {
         return NoFilm;
@@ -56,13 +54,13 @@ public class Film implements Serializable {
     public void setDateSortie(String dateSortie) {
         DateSortie = dateSortie;
     }
-    public int getBudget() {
+    public long getBudget() {
         return Budget;
     }
     public void setBudget(int budget) {
         Budget = budget;
     }
-    public int getMontantRecette() {
+    public long getMontantRecette() {
         return MontantRecette;
     }
     public void setMontantRecette(int montantRecette) {
