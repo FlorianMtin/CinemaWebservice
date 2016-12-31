@@ -65,7 +65,7 @@ import persistance.DialogueBd;
             }
         }
 
-
+        // CATEGORIE
         @GET
         @Path("/Categories")
         @Produces("application/json")
@@ -98,6 +98,24 @@ import persistance.DialogueBd;
 
 
         // FILMS //
+
+        @POST
+        @Path("/Film/Add/{unFilm}")
+        @Consumes("application/json")
+        public void insertionFilm(String unFilm) throws MonException,Exception{
+            DialogueBd unDialogueBd = DialogueBd.getInstance();
+            Gson gson = new Gson();
+            Film film = gson.fromJson(unFilm, Film.class);
+
+            String mysql="INSERT INTO film (Titre,Duree,DateSortie,Budget,MontantRecette,NoRea,CodeCat) ";
+            mysql += "VALUES (\'" + film.getTitre()
+                    + "\',\'" + film.getDuree() + "\',\'" + film.getDateSortie()
+                    + "\',\'" + film.getBudget() + "\',\'" + film.getMontantRecette()
+                    + "\',\'" + film.getNoRea() + "\',\'" + film.getCodeCat()
+                    + "\')";
+            unDialogueBd.insertionBD(mysql);
+
+        }
 
         @GET
         @Path("/Films")
@@ -175,13 +193,8 @@ import persistance.DialogueBd;
                         Long.parseLong(rs.get(i+5).toString()),
                         Integer.parseInt(rs.get(i+6).toString()),
                         rs.get(i+7).toString());
-
-
-
             }
-
             return film;
-
         }
 
 
@@ -235,7 +248,7 @@ import persistance.DialogueBd;
 
             try{
                 DialogueBd unDialoguebd = DialogueBd.getInstance();
-                String mysql = "SELECT * from Personnage";
+                String mysql = "SELECT * from realisateur";
                 rs = unDialoguebd.lecture(mysql);
 
                 while(index < rs.size()) {
@@ -260,6 +273,7 @@ import persistance.DialogueBd;
                 throw e;
             }
         }
+
 
 
 }
